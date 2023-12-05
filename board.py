@@ -1,5 +1,5 @@
 import sudoku_generator
-import cell
+from cell import Cell
 import pygame, sys
 
 class Board(Cell):
@@ -26,10 +26,10 @@ class Board(Cell):
             else:
                 thickness = 1
             # draw vertical lines
-            pygame.draw.line(self, (0, 0, 0), (i * (self.width // 9), 0),
+            pygame.draw.line(self.screen, (0, 0, 0), (i * (self.width // 9), 0),
                              (i * (self.width // 9), self.height), thickness)
             # draw horizontal lines
-            pygame.draw.line(self, (0, 0, 0), (0, i * (self.height // 9)),
+            pygame.draw.line(self.screen, (0, 0, 0), (0, i * (self.height // 9)),
                              (self.width, i * (self.height // 9)), thickness)
 
         pass

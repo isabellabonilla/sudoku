@@ -1,7 +1,8 @@
 import sys
-import board
+from board import Board
 import sudoku_generator
 import pygame
+from cell import Cell
 
 
 pygame.font.init()
@@ -85,15 +86,21 @@ def draw_game_start(screen):
 
 screen = pygame.display.set_mode((900, 1000))
 difficulty = draw_game_start(screen)
-original_board = sudoku_generator.generate_sudoku(9, difficulty)
-game_board = board(screen.get_width(), 9 * (screen.get_height()//10), screen, difficulty)
+#original_board = sudoku_generator.generate_sudoku(9, difficulty)
+game_board = Board(screen.get_width(), 9 * (screen.get_height()//10), screen, difficulty)
 
 game_board.draw()
 
 # Main Game Play Loop
-board_grid_surface = pygame.Surface(screen.get_width(), 9 * (screen.get_height()//10))
+board_grid_surface = pygame.Surface((screen.get_width(), (9 * (screen.get_height()//10))))
 board_grid_rectangle = board_grid_surface.get_rect(center= (screen.get_width()/2,(9 *screen.get_height()//10)/2))
 
+test_cell_1 = Cell(4,2,4, screen)
+test_cell_1.draw()
+test_cell_2 = Cell(0, 8, 2, screen)
+test_cell_2.set_cell_value(3)
+test_cell_2.set_selected(True)
+test_cell_2.draw()
 while True:
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -104,7 +111,7 @@ while True:
     pygame.display.update()
 
 
-def main():
+'''def main():
     # when program starts, display the game start screen with difficulties
 
     game_set_over = False
@@ -144,19 +151,15 @@ def main():
                 board.sketch(sketched_value)
             if event.key == pygame.K_RETURN:
                 if board.is_full(): ## set an option here that if the board is full and the user submits it, check if right or wrong and end game
-                    game_over = true
+                    game_over = True
                 else: 
-                    board(skectched number) ## it'll no longer be skecthed, actually place it on the board
+                    board(sketched_value) ## it'll no longer be skecthed, actually place it on the board
             if event.key == pygame.K_BACKSPACE:
                 board.clear()  # calls method from board to clear the CELL value
             else:
                 #return some sort of error that wrong input was inserted
-        
-
-
-
-
-
+                pass
 
 if __name__ == '__main__':
     main()
+'''

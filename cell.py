@@ -1,6 +1,5 @@
 import sudoku_generator
 import pygame, sys
-import board
 
 class Cell:
 
@@ -35,33 +34,32 @@ class Cell:
         # draw the cell
         # current cell is outlined red
 
-        cell_width = self.screen.width // 9
-        cell_height = self.screen.height // 10
+        cell_width = self.screen.get_width() // 9
+        cell_height = self.screen.get_height() // 10
 
-        cell_surface = pygame.Surface((cell_width, cell_height))
+        cell_surface = pygame.Surface((cell_width - 2, cell_height - 2))
         cell_surface.fill((255, 255, 255))
 
         text_color = (0, 0, 0)
-        text_size = 50
+        text_size = 75
         text_value = ""
 
         if self.selected:
-            pygame.draw.rect(cell_surface, (255, 0, 0), [0, 0][cell_width, cell_height], width=1)
+            pygame.draw.rect(cell_surface, (255, 0, 0), [[1, 1], [cell_width - 3, cell_height - 3]], width=3)
 
-        cell_surface = pygame.Surface((self.col * cell_width, self.row * cell_height),
-                                      ((self.col + 1)* cell_width, (self.row + 1) * cell_height))
 
         if self.original_value != 0:
             # display the original value
-            text_value = self.original_value
+            text_value = str(self.original_value)
         elif self.value != 0:
-            text_value = self.value
+            text_value = str(self.value)
             text_color = (128, 128, 128)
         elif self.sketched_value != 0:
-            text_value = self.sketched_value
-            text_size = 25
+            text_value = str(self.sketched_value)
+            text_size = 40
 
-        text_render = pygame.font.Font.render(text_value, color=text_color, size=text_size)
-        cell_surface.blit(text_render, ((cell_width // 2) - (text_size // 2),
-                                        (cell_height // 2) - (text_size // 2)))
-        self.screen.blit(cell_surface, ((self.col * cell_width), (self.row * cell_height)))
+        cell_font = pygame.font.Font(None, text_size)
+        text_render = cell_font.render(text_value, 0, text_color)
+        text_rect = text_render.get_rect(center=(cell_width // 2, cell_height // 2))
+        cell_surface.blit(text_render, text_rect) #((cell_width // 2) - (text_size // 2), (cell_height // 2) - (text_size // 2)))
+        self.screen.blit(cell_surface, ((self.col * cell_width) + 1, (self.row * cell_height) + 1))
