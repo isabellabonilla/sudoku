@@ -1,4 +1,5 @@
-import math, random
+import math
+import random
 import pygame, sys
 
 
@@ -44,35 +45,27 @@ class SudokuGenerator:
 
         return True
 
-    '''
-	Determines if num is contained in the 3x3 box specified on the board
-    If num is in the specified box starting at (row_start, col_start), return False.
-    Otherwise, return True
-
-	Parameters:
-	row_start and col_start are the starting indices of the box to check
-	i.e. the box is from (row_start, col_start) to (row_start+2, col_start+2)
-	num is the value we are looking for in the box
-
-	Return: boolean
-    '''
-
     def valid_in_box(self, row_start, col_start, num):
-        pass
+        # determines if num is contained in the 3x3 box specified on the board
+        # if num is in the specified box starting at(row_start, col_start), return False.
 
-    '''
-    Determines if it is valid to enter num at (row, col) in the board
-    This is done by checking that num is unused in the appropriate, row, column, and box
+        for row in range(row_start, row_start + 3):
+            for col in range(col_start, col_start + 3):
+                if self.board[row][col] == num:
+                    return False
 
-	Parameters:
-	row and col are the row index and col index of the cell to check in the board
-	num is the value to test if it is safe to enter in this cell
-
-	Return: boolean
-    '''
+        return True
 
     def is_valid(self, row, col, num):
-        pass
+        # determines if it is valid to enter num at (row, col) in the board
+        # this is done by checking that num is unused in the appropriate, row, column, and box
+
+        row_start = row - (row % 3)
+        col_start = col - (col % 3)
+        if self.valid_in_row(row, num) and self.valid_in_col(col, num) and self.valid_in_box(row_start, col_start, num):
+            return True
+
+        return False
 
     '''
     Fills the specified 3x3 box with values
@@ -102,7 +95,7 @@ class SudokuGenerator:
     def fill_remaining(self, row, col):
         # fills the remaining cells of the board
 
-        if (col >= self.row_length and row < self.row_length - 1):
+        if col >= self.row_length and row < self.row_length - 1:
             row += 1
             col = 0
         if row >= self.row_length and col >= self.row_length:
