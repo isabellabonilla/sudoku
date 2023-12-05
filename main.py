@@ -57,7 +57,7 @@ def draw_game_start(screen):
     screen.blit(start_hard_surface, start_hard_rectangle)
     screen.blit(quit_surface, quit_rectangle)
 
-    while True:asfdas
+    while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -100,3 +100,61 @@ while True:
         if event.type == pygame.QUIT:
             sys.exit()
     pygame.display.update()
+
+
+def main():
+    # when program starts, display the game start screen with difficulties
+
+    game_set_over = False
+    win = 0
+
+    pygame.init()
+    ## initialize screen like gigi did above screen = pygame. display.set_mode((900, 1000))
+            # set caption
+    
+    # define difficulty as game start with screen as parameter
+    # then sudoku board with the key size 9 and difficulty selected
+
+
+    clicked = None
+    sketched = 0
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.quit:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.type != game_over:
+                    pass
+                    # code for reset, restart, and exit
+        # variables with where user clicked row and column wise
+        row = int(event.pos[1]/CELL_SIZE)   # grabs position and takes the 1st index which is row #
+        col = int(event.pos[0]/ CELL_SIZE)  # grabs position and takes the 0 index which is col #
+
+        # use these in board to show that its selected using select method from Board
+        board.select(row, col) # no self
+        # sketched using click method from Board
+
+        if event.type == pygame.KEYDOWN:   # listens for key press event and if that happens, accept 1-9 values
+            if pygame.K_1 < event.key <= pygame.K-9:   # accepts range 1-9 inclusive
+                sketched_value = event.key # - pygame.K_1 + 1   # sets sketch value to the event key to sketch it on the board
+                board.sketch(sketched_value)
+            if event.key == pygame.K_RETURN:
+                if board.is_full(): ## set an option here that if the board is full and the user submits it, check if right or wrong and end game
+                    game_over = true
+                else: 
+                    board(skectched number) ## it'll no longer be skecthed, actually place it on the board
+            if event.key == pygame.K_BACKSPACE:
+                board.clear()  # calls method from board to clear the CELL value
+            else:
+                #return some sort of error that wrong input was inserted
+        
+
+
+
+
+
+
+if __name__ == '__main__':
+    main()
