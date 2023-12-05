@@ -1,8 +1,6 @@
 import math, random
 
 
-
-
 class SudokuGenerator:
 
     def __init__(self, removed_cells, row_length=9):
@@ -25,18 +23,10 @@ class SudokuGenerator:
         for row in self.board:
             print(row)
 
-    '''
-	Determines if num is contained in the specified row (horizontal) of the board
-    If num is already in the specified row, return False. Otherwise, return True
-
-	Parameters:
-	row is the index of the row we are checking
-	num is the value we are looking for in the row
-
-	Return: boolean
-    '''
-
     def valid_in_row(self, row, num):
+        # determines if num is contained in the specified row of the board
+        # if num is already in the specified row, return False (otherwise, return True)
+
         for col in range(self.row_length):
             if self.board[row][col] == num:
                 return False
