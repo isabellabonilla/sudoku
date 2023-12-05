@@ -103,20 +103,9 @@ class SudokuGenerator:
     def fill_diagonal(self):
         pass
 
-    '''
-    DO NOT CHANGE
-    Provided for students
-    Fills the remaining cells of the board
-    Should be called after the diagonal boxes have been filled
-
-	Parameters:
-	row, col specify the coordinates of the first empty (0) cell
-
-	Return:
-	boolean (whether or not we could solve the board)
-    '''
-
     def fill_remaining(self, row, col):
+        # fills the remaining cells of the board
+
         if (col >= self.row_length and row < self.row_length - 1):
             row += 1
             col = 0
@@ -143,18 +132,12 @@ class SudokuGenerator:
                 self.board[row][col] = 0
         return False
 
-    '''
-    DO NOT CHANGE
-    Provided for students
-    Constructs a solution by calling fill_diagonal and fill_remaining
-
-	Parameters: None
-	Return: None
-    '''
-
     def fill_values(self):
+        # constructs a solution by calling fill_diagonal and fill_remaining
+
         self.fill_diagonal()
         self.fill_remaining(0, self.box_length)
+
 
     '''
     Removes the appropriate number of cells from the board
@@ -172,25 +155,12 @@ class SudokuGenerator:
     def remove_cells(self):
         pass
 
-
-'''
-DO NOT CHANGE
-Provided for students
-Given a number of rows and number of cells to remove, this function:
-1. creates a SudokuGenerator
-2. fills its values and saves this as the solved state
-3. removes the appropriate number of cells
-4. returns the representative 2D Python Lists of the board and solution
-
-Parameters:
-size is the number of rows/columns of the board (9 for this project)
-removed is the number of cells to clear (set to 0)
-
-Return: list[list] (a 2D Python list to represent the board)
-'''
-
-
 def generate_sudoku(size, removed):
+    # given a number of rows and number of cells to remove
+    # a SudokuGenerator object is created and fills its values, saving as the solved state
+    # removes the appropriate number of cells
+    # returns the representative 2D Python Lists of the board and solution
+
     sudoku = SudokuGenerator(size, removed)
     sudoku.fill_values()
     board = sudoku.get_board()
