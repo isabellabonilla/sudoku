@@ -77,23 +77,14 @@ class SudokuGenerator:
         for row in range(row_start, row_start + 3):
             for col in range(col_start, col_start + 3):
                 while not self.is_valid(row, col, digits[-1]):
-                    self.board[row][col] = digits.pop()
                     random.shuffle(digits)
 
-                self.board[row][col]= digits.pop()
+                self.board[row][col] = digits.pop()
                 random.shuffle(digits)
 
-
-
-    '''
-    Fills the three boxes along the main diagonal of the board
-    These are the boxes which start at (0,0), (3,3), and (6,6)
-
-	Parameters: None
-	Return: None
-    '''
-
     def fill_diagonal(self):
+        # fills the three boxes along the main diagonal of the board
+        # these are the boxes which start at (0,0), (3,3), and (6,6)
         pass
 
     def fill_remaining(self, row, col):
