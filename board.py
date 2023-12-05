@@ -1,5 +1,5 @@
 import sudoku_generator
-import cell
+from cell import Cell
 import pygame, sys
 
 class Board(Cell):
@@ -32,7 +32,6 @@ class Board(Cell):
             pygame.draw.line(self, (0, 0, 0), (0, i * (self.height // 9)),
                              (self.width, i * (self.height // 9)), thickness)
 
-        pass
 
     def select(self, row, col):
         # marks the cell at (row, col) in the board as the current selected cell.
@@ -49,7 +48,7 @@ class Board(Cell):
         # filled by themselves
         pass
 
-    def sketch(selfself, value):
+    def sketch(self, value):
         # Sets the sketched value of the current selected cell equal to user entered value.
         # It will be displayed at the top left corner of the cell using the draw() function.
         pass
@@ -78,6 +77,4 @@ class Board(Cell):
     def check_board(self):
         # Check whether the Sudoku board is solved correctly.
         pass
-
-
 
