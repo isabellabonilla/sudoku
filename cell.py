@@ -16,6 +16,7 @@ class Cell:
 
     def set_sketched_value(self, value):
         # Setter for this cell’s sketched value
+
         self.sketched_value = value
 
     def draw(self):
@@ -23,4 +24,15 @@ class Cell:
         # if this cell has a nonzero value, that value is displayed.
         # otherwise, no value is displayed in the cell.
         # the cell is outlined red if it is currently selected.
+
+        # draw the cell
+        # current cell is outlined red
+
+        if self.value != 0:
+            # display the sketched value
+
+
+
+
+
         pass
