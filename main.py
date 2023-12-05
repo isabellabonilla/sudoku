@@ -1,5 +1,7 @@
 import pygame, sys
 import sudoku_generator
+import board
+
 pygame.font.init()
 
 
@@ -82,7 +84,9 @@ def draw_game_start(screen):
 screen = pygame.display.set_mode((900, 1000))
 difficulty = draw_game_start(screen)
 original_board = sudoku_generator.generate_sudoku(9, difficulty)
-draw_game_screen(screen)
+game_board = board(screen.get_width(), 9 * (screen.get_height()//10), screen, difficulty)
+
+game_board.draw()
 
 # Main Game Play Loop
 board_grid_surface = pygame.Surface(screen.get_width(), 9 * (screen.get_height()//10))

@@ -1,5 +1,6 @@
 import sudoku_generator
 import cell
+import pygame, sys
 
 class Board(Cell):
 
@@ -7,10 +8,30 @@ class Board(Cell):
         # screen is a window from PyGame.
         # difficulty is a variable to indicate if the user chose easy, medium, or hard
         self.difficulty = difficulty
+        self.width = width
+        self.height = height
+        self.screen = screen
 
     def draw(self):
         # draws an outline of the Sudoku grid, with bold lines to delineate the 3x3 boxes.
         # draws every cell on this board
+
+        self.screen.fill((255, 255, 255))
+
+        # draw grid lines
+        for i in range(0, 10):
+            # set thickness for lines
+            if i % 3 == 0:
+                thickness = 3
+            else:
+                thickness = 1
+            # draw vertical lines
+            pygame.draw.line(self, (0, 0, 0), (i * (self.width // 9), 0),
+                             (i * (self.width // 9), self.height), thickness)
+            # draw horizontal lines
+            pygame.draw.line(self, (0, 0, 0), (0, i * (self.height // 9)),
+                             (self.width, i * (self.height // 9)), thickness)
+
         pass
 
     def select(self, row, col):
@@ -58,25 +79,5 @@ class Board(Cell):
         # Check whether the Sudoku board is solved correctly.
         pass
 
-
-    def draw_game_screen(screen, board):
-        screen_width = screen.get_width()
-        screen_height = screen.get_height()
-
-        screen.fill((255, 255, 255))
-
-        # draw grid lines
-        for i in range(0, 10):
-            # set thickness for lines
-            if i % 3 == 0:
-                thickness = 3
-            else:
-                thickness = 1
-            # draw vertical lines
-            pygame.draw.line(screen, (0, 0, 0), (i * (screen_width // 9), 0),
-                             (i * (screen_width // 9), 9 * (screen_height // 10)), thickness)
-            # draw horizontal lines
-            pygame.draw.line(screen, (0, 0, 0), (0, i * (screen_height // 10)),
-                             (9 * (screen_width // 9), i * (screen_height // 10)), thickness)
 
 
