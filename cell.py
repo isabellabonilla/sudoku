@@ -24,11 +24,11 @@ class Cell:
         # the cell is outlined red if it is currently selected.
 
         # draw the cell
+        # current cell is outlined red
 
         if self.value != 0:
             # display the sketched value
 
-        # current cell is outlined red
 
 
 
