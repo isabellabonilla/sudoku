@@ -1,6 +1,8 @@
-import pygame, sys
-import sudoku_generator
+import sys
 import board
+import sudoku_generator
+import pygame
+
 
 pygame.font.init()
 

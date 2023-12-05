@@ -2,11 +2,12 @@ import sudoku_generator
 import cell
 import pygame, sys
 
-class Board(Cell):
+class Board(Cell): # represents an entire Sudoku board, Board object has 81 cell objects
 
     def __init__(self, width, height, screen, difficulty):
         # screen is a window from PyGame.
         # difficulty is a variable to indicate if the user chose easy, medium, or hard
+        Cell.__init__(self) #Getting the other variables from class Cell to be accessed in Board
         self.difficulty = difficulty
         self.width = width
         self.height = height
@@ -32,52 +33,66 @@ class Board(Cell):
             pygame.draw.line(self, (0, 0, 0), (0, i * (self.height // 9)),
                              (self.width, i * (self.height // 9)), thickness)
 
-        pass
+        pass # missing buttons at bottom
 
     def select(self, row, col):
+        """
         # marks the cell at (row, col) in the board as the current selected cell.
-        # Once a cell has been selected, the user can edit its value or sketched value.
-        pass
+        # Once a cell has been selected, the user can edit its value or sketched value
+        """
+        # pygame.Rect and collidepoint() --> see if mouse is on board
+        # compute the row and column of the mouse pointer
+        pygame.draw.rect()
 
-    def click(self, x, y):
-        # if a tuple of (x, y) coordinates is within the displayed board, this function returns a tuple of the (row, col)
-        # of the cell which was clicked. Otherwise, this function returns None.
-        pass
+        for event in pygame.event.get():
+            if event.type ==pygame.MOUSEBUTTONDOWN:
+                row, col = event #idk about the mx,my=event line yet
+
+        if self.board.collidepoint(x,y):
+            row = ? #fixme LATER
+            col = ?
+            selected_cell = current_cell.(#,row,col,screen) #FIXME tryna call the cell function to assign it to exist?
+            return selected_cell
+
+    def click(self,x,y):
+        if x in Board.width and y in Board.height: #FIXME it should be in the tuple is in the screen
+            return cell.(x,y)
+        '''if a tuple of (x,y) coord is within the displayed board,
+        this function returns a tuple of the (row,col) of the cell which was clicked'''
+        return None
 
     def clear(self):
-        # Clears the value cell. Note that the user can only remove the cell values and sketched value that are
-        # filled by themselves
-        pass
 
-    def sketch(selfself, value):
-        # Sets the sketched value of the current selected cell equal to user entered value.
-        # It will be displayed at the top left corner of the cell using the draw() function.
-        pass
+        #compare cell value with the orginal in board, if not same, delete.
+        if cell[row][col] != orignal_board[row][col]:
+            del cell[row][col] # or like set it back to the original cell
 
-    def place_number(self, value):
-        # Sets the value of the current selected cell equal to user entered value.
-        # Called when the user presses the Enter key
-        pass
+
+
+        #clears the value cell, note that the user can only remove the cell values and sketched value that filled by themselves
+        # basically, auto gen cells cant be cleared?
+
+    def sketch(self,value):
+        #sets the sketched value of the current selected cell equal to user entered value
+        # it will be displayed at the top left corner of the cell using the draw() function
+
+    def place_number(self,value):
+        # sets the value of the current selected cell equal to user entered value
+        #called when the user presses the Enter key
 
     def reset_to_original(self):
-        # Reset all cells in the board to their original values (0 if cleared, otherwise the corresponding digit)
-        pass
+        #resets all cells in the board to their original values (0 = cleared, otherwise --> corresp digit)
 
     def is_full(self):
-        # Returns a Boolean value indicating whether the board is full or not.
-        pass
+        #returns a boolean value indicating whether the board is full or not
 
     def update_board(self):
-        # Updates the underlying 2D board with the values in all cells.
-        pass
+        #updates the underlying 2d board with the values in all cells
 
     def find_empty(self):
-        # Finds an empty cell and returns its row and col as a tuple (x, y)
-        pass
+        #fins empty cell and returns its row and col as a tuple (x,y)
 
     def check_board(self):
-        # Check whether the Sudoku board is solved correctly.
-        pass
-
+        #check whether the sudoku board is colved correctly
 
 
