@@ -88,7 +88,8 @@ class SudokuGenerator:
         # fills the three boxes along the main diagonal of the board
         # these are the boxes which start at (0,0), (3,3), and (6,6)
 
-
+        for row in range(0, self.row_length, 3):
+            self.fill_box(row, row)
 
     def fill_remaining(self, row, col):
         # fills the remaining cells of the board
