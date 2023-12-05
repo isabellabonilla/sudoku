@@ -1,4 +1,5 @@
 import math, random
+import pygame, sys
 
 
 class SudokuGenerator:
@@ -25,7 +26,7 @@ class SudokuGenerator:
 
     def valid_in_row(self, row, num):
         # determines if num is contained in the specified row of the board
-        # if num is already in the specified row, return False (otherwise, return True)
+        # if num is already in the specified row, return False
 
         for col in range(self.row_length):
             if self.board[row][col] == num:
@@ -33,20 +34,15 @@ class SudokuGenerator:
 
         return True
 
-
-    '''
-	Determines if num is contained in the specified column (vertical) of the board
-    If num is already in the specified col, return False. Otherwise, return True
-
-	Parameters:
-	col is the index of the column we are checking
-	num is the value we are looking for in the column
-
-	Return: boolean
-    '''
-
     def valid_in_col(self, col, num):
-        pass
+        # determines if num is contained in the specified column of the board
+        # if num is already in the specified col, return False
+
+        for row in range(self.row_length):
+            if self.board[row][col] == num:
+                return False
+
+        return True
 
     '''
 	Determines if num is contained in the 3x3 box specified on the board
