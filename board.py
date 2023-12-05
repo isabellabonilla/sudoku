@@ -59,6 +59,24 @@ class Board(Cell):
         pass
 
 
+    def draw_game_screen(screen, board):
+        screen_width = screen.get_width()
+        screen_height = screen.get_height()
 
+        screen.fill((255, 255, 255))
+
+        # draw grid lines
+        for i in range(0, 10):
+            # set thickness for lines
+            if i % 3 == 0:
+                thickness = 3
+            else:
+                thickness = 1
+            # draw vertical lines
+            pygame.draw.line(screen, (0, 0, 0), (i * (screen_width // 9), 0),
+                             (i * (screen_width // 9), 9 * (screen_height // 10)), thickness)
+            # draw horizontal lines
+            pygame.draw.line(screen, (0, 0, 0), (0, i * (screen_height // 10)),
+                             (9 * (screen_width // 9), i * (screen_height // 10)), thickness)
 
 
