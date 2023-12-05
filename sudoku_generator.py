@@ -1,6 +1,4 @@
-import math
 import random
-import pygame, sys
 
 
 class SudokuGenerator:
@@ -11,8 +9,8 @@ class SudokuGenerator:
 
         self.row_length = row_length
         self.removed_cells = removed_cells
-        self.board = [[0 for i in range(row_length)] for j in range(row_length)]
-        self.box_length = math.sqrt(row_length)
+        self.board = [[0 for col in range(row_length)] for row in range(row_length)]
+        self.box_length = 3
 
     def get_board(self):
         # returns a 2D python list of numbers, representing the sudoku board
@@ -49,8 +47,8 @@ class SudokuGenerator:
         # determines if num is contained in the 3x3 box specified on the board
         # if num is in the specified box starting at(row_start, col_start), return False.
 
-        for row in range(row_start, row_start + 3):
-            for col in range(col_start, col_start + 3):
+        for row in range(row_start, self.box_length):
+            for col in range(col_start, self.box_length):
                 if self.board[row][col] == num:
                     return False
 
@@ -74,8 +72,8 @@ class SudokuGenerator:
         digits = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         random.shuffle(digits)
 
-        for row in range(row_start, row_start + 3):
-            for col in range(col_start, col_start + 3):
+        for row in range(row_start, self.box_length):
+            for col in range(col_start, self.box_length):
                 while not self.is_valid(row, col, digits[-1]):
                     random.shuffle(digits)
 
@@ -93,6 +91,7 @@ class SudokuGenerator:
 
     def fill_remaining(self, row, col):
         # fills the remaining cells of the board
+        # should be called after the diagonal boxes have been filled
 
         if col >= self.row_length and row < self.row_length - 1:
             row += 1
@@ -126,22 +125,23 @@ class SudokuGenerator:
         self.fill_diagonal()
         self.fill_remaining(0, self.box_length)
 
-
-    '''
-    Removes the appropriate number of cells from the board
-    This is done by setting some values to 0
-    Should be called after the entire solution has been constructed
-    i.e. after fill_values has been called
-
-    NOTE: Be careful not to 'remove' the same cell multiple times
-    i.e. if a cell is already 0, it cannot be removed again
-
-	Parameters: None
-	Return: None
-    '''
-
     def remove_cells(self):
-        pass
+        # removes the appropriate number of cells from the board, setting some values to 0
+        # should be called after the entire solution has been constructed
+        # (i.e. after fill_values has been called)
+
+        cell_removal = self.removed_cells
+
+        while cell_removal > 0:
+            row = random.randint(0, self.row_length - 1)
+            col = random.randint(0, self.row_length - 1)
+
+            if self.board[row][col] != 0:
+                self.board[row][col] = 0
+                cell_removal -= 1
+            elif self.board[row][col] == 0:
+                continue
+
 
 def generate_sudoku(size, removed):
     # given a number of rows and number of cells to remove
