@@ -25,3 +25,12 @@ class Cell:
         # otherwise, no value is displayed in the cell.
         # the cell is outlined red if it is currently selected.
 
+        # draw the cell
+
+        if self.value != 0:
+            # display the sketched value
+
+        # current cell is outlined red
+
+
+
