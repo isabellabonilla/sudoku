@@ -67,19 +67,23 @@ class SudokuGenerator:
 
         return False
 
-    '''
-    Fills the specified 3x3 box with values
-    For each position, generates a random digit which has not yet been used in the box
-
-	Parameters:
-	row_start and col_start are the starting indices of the box to check
-	i.e. the box is from (row_start, col_start) to (row_start+2, col_start+2)
-
-	Return: None
-    '''
-
     def fill_box(self, row_start, col_start):
-        pass
+        # fills the specified 3x3 box with values
+        # for each position, generates a random digit which has not yet been used in the box
+
+        digits = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        random.shuffle(digits)
+
+        for row in range(row_start, row_start + 3):
+            for col in range(col_start, col_start + 3):
+                while not self.is_valid(row, col, digits[-1]):
+                    self.board[row][col] = digits.pop()
+                    random.shuffle(digits)
+
+                self.board[row][col]= digits.pop()
+                random.shuffle(digits)
+
+
 
     '''
     Fills the three boxes along the main diagonal of the board
