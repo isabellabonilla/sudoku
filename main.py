@@ -57,7 +57,7 @@ def draw_game_start(screen):
     screen.blit(start_hard_surface, start_hard_rectangle)
     screen.blit(quit_surface, quit_rectangle)
 
-    while True:
+    while True:asfdas
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
