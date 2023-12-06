@@ -1,6 +1,7 @@
 from sudoku_generator import generate_sudoku
 from cell import Cell
-import pygame, sys
+import pygame
+
 
 class Board:
     def __init__(self, width, height, screen, num_removed):
@@ -48,13 +49,10 @@ class Board:
     def select(self, row, col):
         # marks the cell at (row, col) in the board as the current selected cell.
         # Once a cell has been selected, the user can edit its value or sketched value
-        
-        i == row
-        j == col
         # declare cell as selected
         # check each column per row (so check each cell)
-        for row in range(self.board_rows) # calls instance variable for length of rows
-            for col in range(self.board_cols) # calls instance variable for length of cols
+        for row in range(self.board_rows): # calls instance variable for length of rows
+            for col in range(self.board_cols): # calls instance variable for length of cols
                 self.cells[row][col].selected = True # marked as selected
 
         # pygame.Rect and collidepoint() --> see if mouse is on board
@@ -116,10 +114,12 @@ class Board:
         pass
 
     def is_full(self):
-        if [0,0] in self.editable_cells: # check editable array to find cell
-            return False
-        else: # if it does not have empty cell --> it is full
-            return True
+        for coordinates in self.editable_cells: # check editable array to find cell
+            x, y = coordinates
+            if self.cells[x][y] == 0:
+                return False
+         # if it does not have empty cell --> it is full
+        return True
 
     def update_board(self):
         # Updates the underlying 2D board with the values in all cells.
