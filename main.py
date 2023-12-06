@@ -250,87 +250,92 @@ def main():
     clicked = None
     game_set_over = False
     win = 0
-    current_game = Board(width, height, screen, difficulty) # add sudoku_board[0] if issues :)
-
+    difficulty = 0
     draw_game_start(screen)
+    playing_board = False
 
-    while True: #while for game
+
+    while playing_board == False: #while for game
         #
-        playing_board = False
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 #pygame.QUIT()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN: ### only for start screen buttons
                 if event.type == pygame.MOUSEBUTTONDOWN and start_easy_rectangle.collidepoint(event.pos):
-                    current_game = Board(width, height, screen, 30) 
+                    difficulty = 30
                     playing_board = True
                 if event.type == pygame.MOUSEBUTTONDOWN and start_medium_rectangle.collidepoint(event.pos):
-                    current_game = Board(width, height, screen, 40) 
+                    difficulty = 40
                     playing_board = True
                 if event.type == pygame.MOUSEBUTTONDOWN and start_hard_rectangle.collidepoint(event.pos):
-                    current_game = Board(width, height, screen, 50) 
+                    difficulty = 50
                     playing_board = True
-                break # FIX???
 
                 ############## END OF START SCREEN CODE*************************
-        while playing_board == True:
-            current_game.draw()
-            # after current game is made, print the board and overwrite the start screen visual
-            pygame.display.update()
-                ##############################################################
-            reset_rectangle, restart_rectangle, quit_rectangle = bottom_buttons()
-            # While in the game check for the bottom buttons
-            for event in pygame.event.get():
-                if event.type == pygame.MOUSEBUTTONDOWN and not game_set_over:
-                    if reset_rectangle.collidepoint(event.pos):
-                        current_game.reset_to_original()  # FIXME game_board or Board????
-                    if restart_rectangle.collidepoint(event.pos):
-                        draw_game_start(screen)
-                        win = 0
-                    if quit_rectangle.collidepoint(event.pos):
-                        sys.exit()
-                if event.type == pygame.QUIT:
+    current_game = Board(900, 900, screen, difficulty) # add sudoku_board[0] if issues :)
+    current_game.draw()
+        # after current game is made, print the board and overwrite the start screen visual
+    pygame.display.update()
+            ##############################################################
+    reset_rectangle, restart_rectangle, quit_rectangle = bottom_buttons()
+
+    while playing_board == True:
+        # While in the game check for the bottom buttons
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN and not game_set_over:
+                if reset_rectangle.collidepoint(event.pos):
+                    current_game.reset_to_original()  # FIXME game_board or Board????
+                if restart_rectangle.collidepoint(event.pos):
+                    draw_game_start(screen)
+                    win = 0
+                if quit_rectangle.collidepoint(event.pos):
                     sys.exit()
-                if event.type == pygame.KEYDOWN:   # listens for key press event and if that happens, accept 1-9 values
-                    if pygame.K_1 < event.key <= pygame.K-9:   # accepts range 1-9 inclusive
-                        sketched_value = event.key # - pygame.K_1 + 1   # sets sketch value to the event key to sketch it on the board
-                        current_game.sketch(sketched_value)
+                if board_grid_rectangle.collidepoint(event.pos):
+                    current_cell_row = event.pos[0] / 100
+                    current_cell_col = event.pos[1] / 100
+                    current_game.select(current_cell_row, current_cell_col)
+            if event.type == pygame.QUIT:
+                sys.exit()
+            if event.type == pygame.KEYDOWN:   # listens for key press event and if that happens, accept 1-9 values
+                if pygame.K_1 < event.key <= pygame.K_9:   # accepts range 1-9 inclusive
+                    sketched_value = event.key # - pygame.K_1 + 1   # sets sketch value to the event key to sketch it on the board
+                    current_game.sketch(sketched_value)
 
-                    if event.key == pygame.K_RETURN:
+                if event.key == pygame.K_RETURN:
 
-                        #Board.place_number(sketched_value)
-                        current_game.place_number(sketched_value) ## it'll no longer be skecthed, actually place it on the board
+                    #Board.place_number(sketched_value)
+                    current_game.place_number(sketched_value) ## it'll no longer be skecthed, actually place it on the board
 
 
 
-                        if current_game.is_full(): ## set an option here that if the board is full and the user submits it, check if right or wrong and end game
-                            
+                    if current_game.is_full(): ## set an option here that if the board is full and the user submits it, check if right or wrong and end game
 
-                            if current_game.check_board() == True:
-                                
-                                game_set_over = False
-                                game_over_rectangle = game_over(screen, True)
 
-                            
-                                # win screen goes only to exit
-                                if event.type == pygame.MOUSEBUTTONDOWN and game_over_rectangle.collidepoint(event.pos):
-                                    sys.exit()
+                        if current_game.check_board() == True:
 
-                            elif current_game.check_board() == False:
-                                game_set_over = True
-                                game_over_rectangle = game_over(screen, False)
+                            game_set_over = False
+                            game_over_rectangle = game_over(screen, True)
 
-                                # lose screen only goes to restart the loop by going main menu
-                                if event.type == pygame.MOUSEBUTTONDOWN and game_over_rectangle.collidepoint(event.pos):
-                                    playing_board = False
 
-                    if event.key == pygame.K_BACKSPACE:
-                        current_game.clear()  # calls method from board to clear the CELL value
-                    else:
-                        pass
-                    #return some sort of error that wrong input was inserted
-                
+                            # win screen goes only to exit
+                            if event.type == pygame.MOUSEBUTTONDOWN and game_over_rectangle.collidepoint(event.pos):
+                                sys.exit()
+
+                        elif current_game.check_board() == False:
+                            game_set_over = True
+                            game_over_rectangle = game_over(screen, False)
+
+                            # lose screen only goes to restart the loop by going main menu
+                            if event.type == pygame.MOUSEBUTTONDOWN and game_over_rectangle.collidepoint(event.pos):
+                                playing_board = False
+
+                if event.key == pygame.K_BACKSPACE:
+                    current_game.clear()  # calls method from board to clear the CELL value
+                else:
+                    pass
+                #return some sort of error that wrong input was inserted
+
             # variables with where user clicked row and column wise
             #row = int(event.pos[0])   # grabs position and takes the 1st index which is row #
             #col = int(event.pos[1])  # grabs position and takes the 0 index which is col #
@@ -341,12 +346,12 @@ def main():
 
             # sketched using click method from Board
 
-            
+
 
             if event.type == pygame.KEYDOWN:
-                
+
                         continue
-        
+
 
 
 

@@ -45,6 +45,13 @@ class Board:
             pygame.draw.line(self.screen, (0, 0, 0), (0, i * (self.height // 9)),
                              (self.width, i * (self.height // 9)), thickness)
 
+        # Loop through the cells and draw them
+        for i in range(0,self.num_rows): #each row
+            cell_row = []
+            for j in range(0,self.num_cols): #each column
+                # append a cell with the same stuff as the sudoku array
+                self.cells[i][j].draw()
+
         # initialize button font
         button_font = pygame.font.Font(None, 40)
 
@@ -75,7 +82,7 @@ class Board:
         self.screen.blit(reset_surface, reset_rectangle)
         self.screen.blit(restart_surface, restart_rectangle)
         self.screen.blit(quit_surface, quit_rectangle)
-        pass
+
 
     def select(self, row, col):
         # marks the cell at (row, col) in the board as the current selected cell.
@@ -114,6 +121,7 @@ class Board:
             x, y = coordinates
             if self.cells[x][y].selected:
                 self.cells[x][y].set_sketched_value(value)   # uses cell class setter function for setting sketched
+                self.draw()
 
     def place_number(self,value):
         # sets the value of the current selected cell equal to user entered value
@@ -124,6 +132,7 @@ class Board:
                 if self.cells[x][y] == 0:   # hanges board to cells
                     self.cells[x][y].sketched_value[0]
                     self.cells[x][y].set_cell_value()
+                    self.draw()
 
     def reset_to_original(self):
         # Reset all cells in the board to their original values (0 if cleared, otherwise the corresponding digit)
