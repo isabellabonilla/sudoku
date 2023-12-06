@@ -1,6 +1,6 @@
-from sudoku_generator import generate_sudoku
+import sudoku_generator
 from cell import Cell
-import pygame, sys
+import pygame
 
 class Board:
     def __init__(self, width, height, screen, num_removed):
@@ -43,16 +43,45 @@ class Board:
             pygame.draw.line(self.screen, (0, 0, 0), (0, i * (self.height // 9)),
                              (self.width, i * (self.height // 9)), thickness)
 
+        # initialize button font
+        button_font = pygame.font.Font(None, 20)
+
+        # initialize buttons
+        # initialize text first
+        reset_text = button_font.render("Reset", 0, (255, 255, 255))
+        restart_text = button_font.render("Restart", 0, (255, 255, 255))
+        quit_text = button_font.render("Quit", 0, (255, 255, 255))
+
+        # initialize button background color and text
+        reset_surface = pygame.Surface((reset_text.get_size()[0] + 20, reset_text.get_size()[1] + 20))
+        reset_surface.fill((0, 176, 188))
+        reset_surface.blit(reset_text, (10, 10))
+
+        restart_surface = pygame.Surface((restart_text.get_size()[0] + 20, restart_text.get_size()[1] + 20))
+        restart_surface.fill((0, 176, 188))
+        restart_surface.blit(restart_text, (10, 10))
+
+        quit_surface = pygame.Surface((quit_text.get_size()[0] + 20, quit_text.get_size()[1] + 20))
+        quit_surface.fill((0, 176, 188))
+        quit_surface.blit(quit_text, (10, 10))
+
+        # initialize button rectangle
+        reset_rectangle = reset_surface.get_rect(center=(self.width // 4, 9 * self.height // 10))
+        restart_rectangle = restart_surface.get_rect(center=((self.width // 4) * 2, 9 * self.height // 10))
+        quit_rectangle = quit_surface.get_rect(center=((self._width // 4) * 3, 9 * self.height // 10))
+
+        self.screen.blit(reset_surface, reset_rectangle)
+        self.screen.blit(restart_surface, restart_rectangle)
+        self.screen.blit(quit_surface, quit_rectangle)
         pass
 
     def select(self, row, col):
         # marks the cell at (row, col) in the board as the current selected cell.
         # Once a cell has been selected, the user can edit its value or sketched value
-        
         # declare cell as selected
         # check each column per row (so check each cell)
-        for row in range(self.board_rows) # calls instance variable for length of rows
-            for col in range(self.board_cols) # calls instance variable for length of cols
+        for row in range(self.board_rows): # calls instance variable for length of rows
+            for col in range(self.board_cols): # calls instance variable for length of cols
                 self.cells[row][col].selected = True # marked as selected
 
         # pygame.Rect and collidepoint() --> see if mouse is on board
@@ -114,8 +143,12 @@ class Board:
         pass
 
     def is_full(self):
-        # Returns a Boolean value indicating whether the board is full or not.
-        pass
+        for coordinates in self.editable_cells: # check editable array to find cell
+            x, y = coordinates
+            if self.cells[x][y] == 0:
+                return False
+         # if it does not have empty cell --> it is full
+        return True
 
     def update_board(self):
         # Updates the underlying 2D board with the values in all cells.

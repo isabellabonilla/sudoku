@@ -1,5 +1,5 @@
-import sudoku_generator
-import pygame, sys
+import sys
+import pygame
 
 class Cell:
 
