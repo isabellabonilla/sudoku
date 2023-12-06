@@ -49,8 +49,6 @@ class Board:
         # marks the cell at (row, col) in the board as the current selected cell.
         # Once a cell has been selected, the user can edit its value or sketched value
         
-        i == row
-        j == col
         # declare cell as selected
         # check each column per row (so check each cell)
         for row in range(self.board_rows) # calls instance variable for length of rows
