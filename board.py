@@ -8,13 +8,15 @@ class Board:
         # difficulty is a variable to indicate if the user chose easy, medium, or hard
         self.width = width
         self.height = height
+        self.num_rows = 9
+        self.num_cols = 9
         self.screen = screen
         sudoku_array = generate_sudoku(9,num_removed)
         self.cells = []
         self.editable_cells = []
-        for i in range(height): #each row
+        for i in range(0,self.num_rows): #each row
             cell_row = []
-            for j in range(width): #each column
+            for j in range(0,self.num_cols): #each column
                 # append a cell with the same stuff as the sudoku array
                 cell_row.append(Cell(sudoku_array[i][j], i, j, self.screen))
                 if sudoku_array[i][j] == 0:
@@ -68,7 +70,7 @@ class Board:
         # initialize button rectangle
         reset_rectangle = reset_surface.get_rect(center=(self.width // 4, 9 * self.height // 10))
         restart_rectangle = restart_surface.get_rect(center=((self.width // 4) * 2, 9 * self.height // 10))
-        quit_rectangle = quit_surface.get_rect(center=((self._width // 4) * 3, 9 * self.height // 10))
+        quit_rectangle = quit_surface.get_rect(center=((self.width // 4) * 3, 9 * self.height // 10))
 
         self.screen.blit(reset_surface, reset_rectangle)
         self.screen.blit(restart_surface, restart_rectangle)
