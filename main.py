@@ -95,16 +95,27 @@ game_board.draw()
 board_grid_surface = pygame.Surface((screen.get_width(), (9 * (screen.get_height()//10))))
 board_grid_rectangle = board_grid_surface.get_rect(center= (screen.get_width()/2,(9 *screen.get_height()//10)/2))
 
-test_cell_1 = Cell(4,2,4, screen)
-test_cell_1.draw()
-test_cell_2 = Cell(0, 8, 2, screen)
-test_cell_2.set_cell_value(3)
-test_cell_2.set_selected(True)
-test_cell_2.draw()
+'''for i in range(0, 10):
+    test_cell_orig = Cell(i + 1, 0, i, screen)
+    if i == 0:
+        test_cell_orig.set_selected(True)
+        test_cell_orig.draw()
+        test_cell_orig.set_selected(False)
+    test_cell_orig.draw()
+    test_cell_sketch = Cell(0, 1, i, screen)
+    test_cell_sketch.set_sketched_value((i + 4) % 9)
+    test_cell_sketch.set_selected((i % 3) == 0)
+    test_cell_sketch.draw()
+    test_cell_value = Cell(0, 2, i, screen)
+    test_cell_value.set_cell_value((i + 7) % 9)
+    test_cell_value.set_selected((i % 3) == 2)
+    test_cell_value.draw()
+    '''
 while True:
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
             if board_grid_rectangle.collidepoint(event.pos):
+
                 pass # event.pos.x / (screen.get_width()/9)
         if event.type == pygame.QUIT:
             sys.exit()
