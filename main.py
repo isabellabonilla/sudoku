@@ -82,19 +82,19 @@ def draw_game_start(screen):
 
 
 
+def main():
 
+    screen = pygame.display.set_mode((900, 1000))
+    difficulty = draw_game_start(screen)
+    game_board = Board(screen.get_width(), 9 * (screen.get_height()//10), screen, difficulty)
 
-screen = pygame.display.set_mode((900, 1000))
-difficulty = draw_game_start(screen)
-game_board = Board(screen.get_width(), 9 * (screen.get_height()//10), screen, difficulty)
-
-game_board.draw()
+    game_board.draw()
 
 # Main Game Play Loop
-board_grid_surface = pygame.Surface((screen.get_width(), (9 * (screen.get_height()//10))))
-board_grid_rectangle = board_grid_surface.get_rect(center= (screen.get_width()/2,(9 *screen.get_height()//10)/2))
+    board_grid_surface = pygame.Surface((screen.get_width(), (9 * (screen.get_height()//10))))
+    board_grid_rectangle = board_grid_surface.get_rect(center= (screen.get_width()/2,(9 *screen.get_height()//10)/2))
 
-'''for i in range(0, 10):
+    '''for i in range(0, 10):
     test_cell_orig = Cell(i + 1, 0, i, screen)
     if i == 0:
         test_cell_orig.set_selected(True)
@@ -110,18 +110,18 @@ board_grid_rectangle = board_grid_surface.get_rect(center= (screen.get_width()/2
     test_cell_value.set_selected((i % 3) == 2)
     test_cell_value.draw()
     '''
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if board_grid_rectangle.collidepoint(event.pos):
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if board_grid_rectangle.collidepoint(event.pos):
 
-                pass # event.pos.x / (screen.get_width()/9)
-        if event.type == pygame.QUIT:
-            sys.exit()
-    pygame.display.update()
+                    pass # event.pos.x / (screen.get_width()/9)
+            if event.type == pygame.QUIT:
+                sys.exit()
+        pygame.display.update()
 
-
-'''def main():
+    '''
+def main():
     # when program starts, display the game start screen with difficulties
 
     game_set_over = False
@@ -174,7 +174,6 @@ while True:
 
 
 
-
+'''
 if __name__ == '__main__':
     main()
-'''
