@@ -101,7 +101,7 @@ class Board:
         #     return selected_cell
 
     def click(self,x,y):
-        if x <= self.width and y <= self.height: #FIXME it should be in the tuple is in the screen
+        if x <= self.height and y <= self.width:
             return self.cells[x][y]
         '''if a tuple of (x,y) coord is within the displayed board,
         this function returns a tuple of the (row,col) of the cell which was clicked'''
