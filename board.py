@@ -1,13 +1,12 @@
 import sudoku_generator
-import cell
+from cell import Cell
 import pygame, sys
 
-class Board(Cell): # represents an entire Sudoku board, Board object has 81 cell objects
+class Board(Cell):
 
     def __init__(self, width, height, screen, difficulty):
         # screen is a window from PyGame.
         # difficulty is a variable to indicate if the user chose easy, medium, or hard
-        Cell.__init__(self) #Getting the other variables from class Cell to be accessed in Board
         self.difficulty = difficulty
         self.width = width
         self.height = height
@@ -27,13 +26,13 @@ class Board(Cell): # represents an entire Sudoku board, Board object has 81 cell
             else:
                 thickness = 1
             # draw vertical lines
-            pygame.draw.line(self, (0, 0, 0), (i * (self.width // 9), 0),
+            pygame.draw.line(self.screen, (0, 0, 0), (i * (self.width // 9), 0),
                              (i * (self.width // 9), self.height), thickness)
             # draw horizontal lines
-            pygame.draw.line(self, (0, 0, 0), (0, i * (self.height // 9)),
+            pygame.draw.line(self.screen, (0, 0, 0), (0, i * (self.height // 9)),
                              (self.width, i * (self.height // 9)), thickness)
 
-        pass # missing buttons at bottom
+        pass
 
     def select(self, row, col):
         # marks the cell at (row, col) in the board as the current selected cell.
@@ -71,19 +70,14 @@ class Board(Cell): # represents an entire Sudoku board, Board object has 81 cell
         return None
 
     def clear(self):
+        # Clears the value cell. Note that the user can only remove the cell values and sketched value that are
+        # filled by themselves
+        pass
 
-        #compare cell value with the orginal in board, if not same, delete.
-        if cell[row][col] != orignal_board[row][col]:
-            del cell[row][col] # or like set it back to the original cell
-
-
-
-        #clears the value cell, note that the user can only remove the cell values and sketched value that filled by themselves
-        # basically, auto gen cells cant be cleared?
-
-    def sketch(self,value):
-        #sets the sketched value of the current selected cell equal to user entered value
-        # it will be displayed at the top left corner of the cell using the draw() function
+    def sketch(selfself, value):
+        # Sets the sketched value of the current selected cell equal to user entered value.
+        # It will be displayed at the top left corner of the cell using the draw() function.
+        pass
 
     def place_number(self,value):
         # sets the value of the current selected cell equal to user entered value
@@ -96,18 +90,24 @@ class Board(Cell): # represents an entire Sudoku board, Board object has 81 cell
                         self.cells[col][row]set_cell_value():
 
     def reset_to_original(self):
-        #resets all cells in the board to their original values (0 = cleared, otherwise --> corresp digit)
+        # Reset all cells in the board to their original values (0 if cleared, otherwise the corresponding digit)
+        pass
 
     def is_full(self):
-        #returns a boolean value indicating whether the board is full or not
+        # Returns a Boolean value indicating whether the board is full or not.
+        pass
 
     def update_board(self):
-        #updates the underlying 2d board with the values in all cells
+        # Updates the underlying 2D board with the values in all cells.
+        pass
 
     def find_empty(self):
-        #fins empty cell and returns its row and col as a tuple (x,y)
+        # Finds an empty cell and returns its row and col as a tuple (x, y)
+        pass
 
     def check_board(self):
-        #check whether the sudoku board is colved correctly
+        # Check whether the Sudoku board is solved correctly.
+        pass
+
 
 
