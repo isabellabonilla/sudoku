@@ -1,16 +1,23 @@
-import sudoku_generator
+from sudoku_generator import generate_sudoku
 from cell import Cell
 import pygame, sys
 
-class Board(Cell):
-
-    def __init__(self, width, height, screen, difficulty):
+class Board:
+    def __init__(self, width, height, screen, num_removed):
         # screen is a window from PyGame.
         # difficulty is a variable to indicate if the user chose easy, medium, or hard
-        self.difficulty = difficulty
         self.width = width
         self.height = height
         self.screen = screen
+        self.array = generate_sudoku(9,num_removed)
+        #TODO: CREATE AN ARRAY OF CELL OBJECTS
+        self.editable_cells = []
+        for i in range(height):
+            for j in range(width):
+                if self.array[i][j] == 0:
+                    self.editable_cells.append((i, j)) #append the coordinates of the editable cells
+
+
 
     def draw(self):
         # draws an outline of the Sudoku grid, with bold lines to delineate the 3x3 boxes.
@@ -42,8 +49,8 @@ class Board(Cell):
         j == col
         # declare cell as selected
         # check each column per row (so check each cell)
-        for i in range(self.board_rows) # calls instance variable for length of rows
-            for j in range(self.board_cols) # calls instance variable for length of cols
+        for i in range(self.board_rows): # calls instance variable for length of rows
+            for j in range(self.board_cols): # calls instance variable for length of cols
                 self.cells[i][j].selected = True # marked as selected
 
         # pygame.Rect and collidepoint() --> see if mouse is on board
@@ -63,7 +70,7 @@ class Board(Cell):
         #     return selected_cell
 
     def click(self,x,y):
-        if x in Board.width and y in Board.height: #FIXME it should be in the tuple is in the screen
+        if x <= Board.width and y <= Board.height: #FIXME it should be in the tuple is in the screen
             return cell.(x,y)
         '''if a tuple of (x,y) coord is within the displayed board,
         this function returns a tuple of the (row,col) of the cell which was clicked'''
@@ -74,7 +81,7 @@ class Board(Cell):
         # filled by themselves
         pass
 
-    def sketch(selfself, value):
+    def sketch(self, value):
         # Sets the sketched value of the current selected cell equal to user entered value.
         # It will be displayed at the top left corner of the cell using the draw() function.
         pass

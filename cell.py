@@ -13,7 +13,6 @@ class Cell:
         self.selected = False
 
 
-
     def set_cell_value(self, value):
         # setter for this cell’s value
 
