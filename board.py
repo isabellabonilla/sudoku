@@ -102,8 +102,10 @@ class Board:
         pass
 
     def is_full(self):
-        # Returns a Boolean value indicating whether the board is full or not.
-        pass
+        if [0,0] in self.editable_cells: # check editable array to find cell
+            return False
+        else: # if it does not have empty cell --> it is full
+            return True
 
     def update_board(self):
         # Updates the underlying 2D board with the values in all cells.
