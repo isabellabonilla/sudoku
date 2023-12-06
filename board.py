@@ -146,7 +146,6 @@ class Board:
             self.cells[x][y].sketched_value = 0
 
 
-
     def is_full(self):
         for coordinates in self.editable_cells: # check editable array to find cell
             x, y = coordinates
@@ -155,6 +154,7 @@ class Board:
          # if it does not have empty cell --> it is full
         return True
 
+    '''
     def update_board(self):
         # Updates the underlying 2D board with the values in all cells.
         pass
@@ -162,10 +162,10 @@ class Board:
     def find_empty(self):
         # Finds an empty cell and returns its row and col as a tuple (x, y)
         pass
+    '''
 
     def check_board(self):
         # Check whether the Sudoku board is solved correctly.
         pass
-
 
 
