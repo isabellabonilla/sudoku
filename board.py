@@ -2,16 +2,22 @@ import sudoku_generator
 import cell
 import pygame, sys
 
-class Board(Cell): # represents an entire Sudoku board, Board object has 81 cell objects
-
+class Board: # represents an entire Sudoku board, Board object has 81 cell objects
+    board_width = 9 #placeholders
+    board_height = 9 #placeholders
     def __init__(self, width, height, screen, difficulty):
         # screen is a window from PyGame.
         # difficulty is a variable to indicate if the user chose easy, medium, or hard
-        Cell.__init__(self) #Getting the other variables from class Cell to be accessed in Board
         self.difficulty = difficulty
+            if diff == easy:
+                randnum fill --> 31 cells; for i len(arr): count +=1 until count = 31
+                generat
         self.width = width
         self.height = height
         self.screen = screen
+        self.selected_cell = None #fixme
+        self.cells81 = []# make array of the row and column numbers that can be editted later
+        #we want to make the backend --> boost outward visual --> selected cells
 
     def draw(self):
         # draws an outline of the Sudoku grid, with bold lines to delineate the 3x3 boxes.
@@ -42,30 +48,32 @@ class Board(Cell): # represents an entire Sudoku board, Board object has 81 cell
         """
         # pygame.Rect and collidepoint() --> see if mouse is on board
         # compute the row and column of the mouse pointer
-        pygame.draw.rect()
+
+
+        pos =  pygame.mouse.get_pos() # get mouse position
 
         for event in pygame.event.get():
             if event.type ==pygame.MOUSEBUTTONDOWN:
                 row, col = event #idk about the mx,my=event line yet
 
-        if self.board.collidepoint(x,y):
+        if self.rect.collidepoint(x,y):
+
             row = ? #fixme LATER
             col = ?
             selected_cell = current_cell.(#,row,col,screen) #FIXME tryna call the cell function to assign it to exist?
             return selected_cell
 
     def click(self,x,y):
-        if x in Board.width and y in Board.height: #FIXME it should be in the tuple is in the screen
-            return cell.(x,y)
-        '''if a tuple of (x,y) coord is within the displayed board,
-        this function returns a tuple of the (row,col) of the cell which was clicked'''
-        return None
+        if x <= screen_width/9 and y <= screen_height/10: #FIXME if cell is in the screen size(?)
+            self.selected_cell = (int(x),int(y)) # tuple of the row,col of the cell clicked
+
+        else:
+            return None
 
     def clear(self):
 
-        #compare cell value with the orginal in board, if not same, delete.
-        if cell[row][col] != orignal_board[row][col]:
-            del cell[row][col] # or like set it back to the original cell
+        row, col = self.selected_cell
+        if cell[row][col]
 
 
 
@@ -93,6 +101,6 @@ class Board(Cell): # represents an entire Sudoku board, Board object has 81 cell
         #fins empty cell and returns its row and col as a tuple (x,y)
 
     def check_board(self):
-        #check whether the sudoku board is colved correctly
+        #check whether the sudoku board is solved correctly
 
 

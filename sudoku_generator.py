@@ -3,13 +3,13 @@ import random
 
 class SudokuGenerator:
 
-    def __init__(self, removed_cells, row_length=9):
+    def __init__(self, size, removed_cells):
         # creating a sudoku board with a 2d list of empty values (0s)
         # initializing class variables
 
-        self.row_length = row_length
+        self.row_length = size
         self.removed_cells = removed_cells
-        self.board = [[0 for col in range(row_length)] for row in range(row_length)]
+        self.board = [[0 for col in range(size)] for row in range(size)]
         self.box_length = 3
 
     def get_board(self):
@@ -37,7 +37,7 @@ class SudokuGenerator:
         # determines if num is contained in the specified column of the board
         # if num is already in the specified col, return False
 
-        for row in range(self.row_length):
+        for row in range(0, self.row_length):
             if self.board[row][col] == num:
                 return False
 
@@ -47,8 +47,8 @@ class SudokuGenerator:
         # determines if num is contained in the 3x3 box specified on the board
         # if num is in the specified box starting at(row_start, col_start), return False.
 
-        for row in range(row_start, self.box_length):
-            for col in range(col_start, self.box_length):
+        for row in range(row_start, row_start + 3): # check the 3*3 rows
+            for col in range(col_start, col_start+3): # check the 3*3 columns
                 if self.board[row][col] == num:
                     return False
 
@@ -72,15 +72,9 @@ class SudokuGenerator:
         digits = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         random.shuffle(digits)
 
-        for row in range(row_start, self.box_length):
-            for col in range(col_start, self.box_length):
-                while not self.is_valid(row, col, digits[-1]):
-                    random.shuffle(digits)
-
-                if self.board[row][col] == 0:
-                    self.board[row][col] = digits.pop()
-
-                random.shuffle(digits)
+        for row in range(row_start, row_start+3): # fill range in the 3x3 format
+            for col in range(col_start, col_start+3):
+                    self.board[row][col] = digits.pop() # sticks the last shuffled digit in the array
 
     def fill_diagonal(self):
         # fills the three boxes along the main diagonal of the board
@@ -89,11 +83,21 @@ class SudokuGenerator:
         for row in range(0, self.row_length, 3):
             self.fill_box(row, row)
 
-    def fill_remaining(self, row, col):
-        # fills the remaining cells of the board
-        # should be called after the diagonal boxes have been filled
+    '''
+     DO NOT CHANGE
+     Provided for students
+     Fills the remaining cells of the board
+     Should be called after the diagonal boxes have been filled
 
-        if col >= self.row_length and row < self.row_length - 1:
+     Parameters:
+     row, col specify the coordinates of the first empty (0) cell
+
+     Return:
+     boolean (whether or not we could solve the board)
+     '''
+
+    def fill_remaining(self, row, col):
+        if (col >= self.row_length and row < self.row_length - 1):
             row += 1
             col = 0
         if row >= self.row_length and col >= self.row_length:
@@ -119,9 +123,16 @@ class SudokuGenerator:
                 self.board[row][col] = 0
         return False
 
-    def fill_values(self):
-        # constructs a solution by calling fill_diagonal and fill_remaining
+    '''
+    DO NOT CHANGE
+    Provided for students
+    Constructs a solution by calling fill_diagonal and fill_remaining
 
+    Parameters: None
+    Return: None
+    '''
+
+    def fill_values(self):
         self.fill_diagonal()
         self.fill_remaining(0, self.box_length)
 
