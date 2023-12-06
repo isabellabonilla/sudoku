@@ -86,23 +86,14 @@ def draw_game_start(screen):
                 if start_easy_rectangle.collidepoint(event.pos):
                     # checks if mouse is on easy button
                     cells_popped = 30
-                    difficulty = cells_popped
-                    game_board = Board(screen.get_width(), 9 * (screen.get_height()//10), screen, difficulty)
-                    game_board.draw()
                     return cells_popped # if mouse is on easy button we can return option 1 to main
                 elif start_medium_rectangle.collidepoint(event.pos):
                     # checks if mouse is on medium button
                     cells_popped = 40
-                    difficulty = cells_popped
-                    game_board = Board(screen.get_width(), 9 * (screen.get_height()//10), screen, difficulty)
-                    game_board.draw()
                     return cells_popped # if mouse is on medium button we can return option 2 to main
                 elif start_hard_rectangle.collidepoint(event.pos):
                     # checks if mouse is on hard button
                     cells_popped = 50
-                    difficulty = cells_popped
-                    game_board = Board(screen.get_width(), 9 * (screen.get_height()//10), screen, difficulty)
-                    game_board.draw()
                     return cells_popped # if mouse is on hard button we can return option 3 to main
                 elif quit_rectangle.collidepoint(event.pos):
                     # if the mouse is on the quit button, exit the game
@@ -250,56 +241,36 @@ def main():
     clicked = None
     game_set_over = False
     win = 0
-    difficulty = 0
-    draw_game_start(screen)
-    playing_board = False
-
-
-    while playing_board == False: #while for game
-        #
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                #pygame.QUIT()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN: ### only for start screen buttons
-                if event.type == pygame.MOUSEBUTTONDOWN and start_easy_rectangle.collidepoint(event.pos):
-                    difficulty = 30
-                    playing_board = True
-                if event.type == pygame.MOUSEBUTTONDOWN and start_medium_rectangle.collidepoint(event.pos):
-                    difficulty = 40
-                    playing_board = True
-                if event.type == pygame.MOUSEBUTTONDOWN and start_hard_rectangle.collidepoint(event.pos):
-                    difficulty = 50
-                    playing_board = True
+    difficulty = draw_game_start(screen)
 
                 ############## END OF START SCREEN CODE*************************
     current_game = Board(900, 900, screen, difficulty) # add sudoku_board[0] if issues :)
-    current_game.draw()
-        # after current game is made, print the board and overwrite the start screen visual
-    pygame.display.update()
             ##############################################################
-    reset_rectangle, restart_rectangle, quit_rectangle = bottom_buttons()
+    reset_rectangle, restart_rectangle, quit_rectangle = current_game.draw()
 
-    while playing_board == True:
+    while True:
+        current_game.draw()
+        # after current game is made, print the board and overwrite the start screen visual
+        pygame.display.update()
         # While in the game check for the bottom buttons
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN and not game_set_over:
                 if reset_rectangle.collidepoint(event.pos):
                     current_game.reset_to_original()  # FIXME game_board or Board????
                 if restart_rectangle.collidepoint(event.pos):
-                    draw_game_start(screen)
-                    win = 0
+                    difficulty = draw_game_start(screen)
+                    current_game = Board(900, 900, screen, difficulty)  # add sudoku_board[0] if issues :)
                 if quit_rectangle.collidepoint(event.pos):
                     sys.exit()
                 if board_grid_rectangle.collidepoint(event.pos):
-                    current_cell_row = event.pos[0] / 100
-                    current_cell_col = event.pos[1] / 100
+                    current_cell_row = event.pos[1] // 100
+                    current_cell_col = event.pos[0] // 100
                     current_game.select(current_cell_row, current_cell_col)
             if event.type == pygame.QUIT:
                 sys.exit()
             if event.type == pygame.KEYDOWN:   # listens for key press event and if that happens, accept 1-9 values
-                if pygame.K_1 < event.key <= pygame.K_9:   # accepts range 1-9 inclusive
-                    sketched_value = event.key # - pygame.K_1 + 1   # sets sketch value to the event key to sketch it on the board
+                if pygame.K_1 <= event.key <= pygame.K_9:   # accepts range 1-9 inclusive
+                    sketched_value = event.key - 48 # - pygame.K_1 + 1   # sets sketch value to the event key to sketch it on the board
                     current_game.sketch(sketched_value)
 
                 if event.key == pygame.K_RETURN:

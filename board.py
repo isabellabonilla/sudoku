@@ -22,7 +22,8 @@ class Board:
                 if sudoku_array[i][j] == 0:
                     self.editable_cells.append((i, j)) #append the coordinates of the editable cells
             self.cells.append(cell_row)
-
+        self.selected_row = 0
+        self.selected_col = 0
 
 
     def draw(self):
@@ -82,6 +83,7 @@ class Board:
         self.screen.blit(reset_surface, reset_rectangle)
         self.screen.blit(restart_surface, restart_rectangle)
         self.screen.blit(quit_surface, quit_rectangle)
+        return (reset_rectangle,restart_rectangle,quit_rectangle)
 
 
     def select(self, row, col):
@@ -89,9 +91,19 @@ class Board:
         # Once a cell has been selected, the user can edit its value or sketched value
         # declare cell as selected
         # check each column per row (so check each cell)
-        for row in range(self.height): # calls instance variable for length of rows
-            for col in range(self.width): # calls instance variable for length of cols
-                self.cells[row][col].selected = True # marked as selected
+        #for row in range(self.height): # calls instance variable for length of rows
+        #    for col in range(self.width): # calls instance variable for length of cols
+
+        if self.cells[row][col].is_editable():
+            # Unselect the currently selected cell
+            self.cells[self.selected_row][self.selected_col].selected = False # marked as selected
+
+            # Select the new cell
+            self.cells[row][col].selected = True # marked as selected
+
+            # Remember the newly selected cell
+            self.selected_row = row
+            self.selected_col = col
 
 
     def click(self,x,y):
@@ -126,13 +138,10 @@ class Board:
     def place_number(self,value):
         # sets the value of the current selected cell equal to user entered value
         #called when the user presses the Enter key IN MAINNNNNN
-        for coordinates in self.editable_cells:  # check editable array to find cell
-            x, y = coordinates
-            if self.cells[y][x].selected(): # if cell is selected and has nothing there but CAN have something there, sketch and set
-                if self.cells[x][y] == 0:   # hanges board to cells
-                    self.cells[x][y].sketched_value[0]
-                    self.cells[x][y].set_cell_value()
-                    self.draw()
+
+        if self.cells[self.selected_row][self.selected_col].selected: # if cell is selected and has nothing there but CAN have something there, sketch and set
+            self.cells[self.selected_row][self.selected_col].set_cell_value(self.cells[self.selected_row][self.selected_col].sketched_value)
+
 
     def reset_to_original(self):
         # Reset all cells in the board to their original values (0 if cleared, otherwise the corresponding digit)
@@ -171,7 +180,7 @@ class Board:
 
         return True
 
-    def check_col(self, col, num):
+    def check_col(self, col):
         # each col has no duplicate number
         numbers = []
         for row in range(self.num_rows):
@@ -185,7 +194,7 @@ class Board:
         # determines no duplicate number is contained in the 3x3 box specified on the board
         numbers = []
         for row in range(row_start, row_start + 3): # check the 3*3 rows
-            for col in range(col_start, col_start+3): # check the 3*3 columns
+            for col in range(col_start, col_start + 3): # check the 3*3 columns
                 if self.board[row][col] in numbers:
                     return False
                 else:

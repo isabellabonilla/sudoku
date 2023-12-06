@@ -12,6 +12,8 @@ class Cell:
         self.sketched_value = 0
         self.selected = False
 
+    def is_editable(self):
+        return self.original_value == 0
 
     def set_cell_value(self, value):
         # setter for this cell’s value
@@ -44,6 +46,7 @@ class Cell:
         text_color = (0, 0, 0)
         text_size = 75
         text_value = ""
+        text_center = 2
 
         if self.selected:
             pygame.draw.rect(cell_surface, (255, 0, 0), [[0, 0], [cell_width - 6, cell_height - 6]], width=3)
@@ -59,9 +62,10 @@ class Cell:
             text_color = (128, 128, 128)
             text_value = str(self.sketched_value)
             text_size = 50
+            text_center = 4
 
         cell_font = pygame.font.Font(None, text_size)
         text_render = cell_font.render(text_value, 0, text_color)
-        text_rect = text_render.get_rect(center=(cell_width // 2, cell_height // 2))
+        text_rect = text_render.get_rect(center=(cell_width // text_center, cell_height // text_center))
         cell_surface.blit(text_render, text_rect)
         self.screen.blit(cell_surface, ((self.col * cell_width) + 3, (self.row * cell_height) + 3))
