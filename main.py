@@ -271,6 +271,7 @@ def main():
                 if event.type == pygame.MOUSEBUTTONDOWN and start_hard_rectangle.collidepoint(event.pos):
                     current_game = Board(width, height, screen, 50) 
                     playing_board = True
+                break # FIX???
 
                 ############## END OF START SCREEN CODE*************************
         while playing_board == True:
@@ -289,7 +290,7 @@ def main():
                         win = 0
                     if quit_rectangle.collidepoint(event.pos):
                         sys.exit()
-                if event.type == pygame.QUIT():
+                if event.type == pygame.QUIT:
                     sys.exit()
                 if event.type == pygame.KEYDOWN:   # listens for key press event and if that happens, accept 1-9 values
                     if pygame.K_1 < event.key <= pygame.K-9:   # accepts range 1-9 inclusive

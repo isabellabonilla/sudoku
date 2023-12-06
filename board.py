@@ -3,15 +3,15 @@ from cell import Cell
 import pygame
 
 class Board:
-    def __init__(self, width, height, screen, num_removed):
+    def __init__(self, width, height, screen, difficulty):
         # screen is a window from PyGame.
-        # difficulty is a variable to indicate if the user chose easy, medium, or hard
+        # difficulty is a variable to indicate if the user chose easy, medium, or hard; this is the returned number
         self.width = width
         self.height = height
         self.num_rows = 9
         self.num_cols = 9
         self.screen = screen
-        sudoku_array = generate_sudoku(9,num_removed)
+        sudoku_array = generate_sudoku(9, difficulty) #WE MIGHT NOT NEED THIS
         self.cells = []
         self.editable_cells = []
         for i in range(0,self.num_rows): #each row
@@ -86,21 +86,6 @@ class Board:
             for col in range(self.width): # calls instance variable for length of cols
                 self.cells[row][col].selected = True # marked as selected
 
-        # pygame.Rect and collidepoint() --> see if mouse is on board
-        # compute the row and column of the mouse pointer
-
-        # karla edits
-        # pygame.draw.rect()
-
-        # for event in pygame.event.get():
-        #     if event.type ==pygame.MOUSEBUTTONDOWN:
-        #         row, col = event #idk about the mx,my=event line yet
-
-        # if self.board.collidepoint(x,y):
-        #     row = ? #fixme LATER
-        #     col = ?
-        #     selected_cell = current_cell.(#,row,col,screen) #FIXME tryna call the cell function to assign it to exist?
-        #     return selected_cell
 
     def click(self,x,y):
         if x <= self.height and y <= self.width:
