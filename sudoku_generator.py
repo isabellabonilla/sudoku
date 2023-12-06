@@ -134,15 +134,16 @@ class SudokuGenerator:
         # should be called after the entire solution has been constructed
         # (i.e. after fill_values has been called)
 
-        cell_removal = self.removed_cells
+        removed_cells = set()
 
-        while cell_removal > 0:
+        while len(removed_cells) < self.removed_cells:
+
             row = random.randint(0, self.row_length - 1)
             col = random.randint(0, self.row_length - 1)
 
-            if self.board[row][col] != 0:
+            if (row, col) not in removed_cells and self.board[row][col] != 0:
+                removed_cells.add((row, col))
                 self.board[row][col] = 0
-                cell_removal -= 1
 
 
 def generate_sudoku(size, removed):
