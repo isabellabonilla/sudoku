@@ -1,4 +1,4 @@
-import sudoku_generator
+from sudoku_generator import generate_sudoku
 from cell import Cell
 import pygame
 
@@ -115,8 +115,8 @@ class Board:
                 if self.cells[row][col].selected: # if selected
                     # check OG board, if there is nothin in OG board, remove the sketched value and actual value
                     if self.board[row][col] == 0:
-                        self.cells[row][col].sketched_value == 0
-                        self.cells[row][col].value == 0
+                        self.cells[row][col].sketched_value = 0
+                        self.cells[row][col].value = 0
 
 
     def sketch(self, value):
@@ -140,12 +140,17 @@ class Board:
 
     def reset_to_original(self):
         # Reset all cells in the board to their original values (0 if cleared, otherwise the corresponding digit)
-        pass
+        for coordinates in self.editable_cells:  # check editable array to find cell
+            x, y = coordinates
+            self.cells[x][y].value = 0
+            self.cells[x][y].sketched_value = 0
+
+
 
     def is_full(self):
         for coordinates in self.editable_cells: # check editable array to find cell
             x, y = coordinates
-            if self.cells[x][y] == 0:
+            if self.cells[x][y].value == 0:
                 return False
          # if it does not have empty cell --> it is full
         return True
