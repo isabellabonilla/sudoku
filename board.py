@@ -165,9 +165,61 @@ class Board:
         # Finds an empty cell and returns its row and col as a tuple (x, y)
         pass
     '''
+    # copied the validity checkers, but adapted to the board class
+    def check_row(self, row):
+        # each row has no duplicate number
+        numbers = []
+        for col in range(self.num_cols):
+            if self.cells[row][col] in numbers:
+                return False
+            else:
+                numbers.append(self.cells[row][col])
+
+        return True
+
+    def check_col(self, col, num):
+        # each col has no duplicate number
+        numbers = []
+        for row in range(self.num_rows):
+            if self.cells[row][col] in numbers:
+                return False
+            else:
+                numbers.append(self.cells[row][col])
+
+        return True
+    def check_box(self, row_start, col_start):
+        # determines no duplicate number is contained in the 3x3 box specified on the board
+        numbers = []
+        for row in range(row_start, row_start + 3): # check the 3*3 rows
+            for col in range(col_start, col_start+3): # check the 3*3 columns
+                if self.board[row][col] in numbers:
+                    return False
+                else:
+                    numbers.append(self.cells[row][col])
+        return True
 
     def check_board(self):
-        # Check whether the Sudoku board is solved correctly.
-        pass
+        #Check whether the Sudoku board is solved correctly.
+        #checking each row
+        for row in range(self.num_rows):
+            if not self.check_row(row):
+                # if invalid
+                return False
+        #checking in col
+        for col in range(self.num_cols):
+            if not self.check_col(col):
+                # if invalid
+                return False
+
+
+        #checking each box
+        for row_start in range(0, self.num_rows, 3):
+            for col_start in range (0, self.num_cols, 3):
+                if not self.check_box(row_start, col_start):
+                    return False
+
+
+        # if we made it through all the checks
+        return True
 
 
