@@ -36,6 +36,17 @@ class Board(Cell): # represents an entire Sudoku board, Board object has 81 cell
         pass # missing buttons at bottom
 
     def select(self, row, col):
+        i == row
+        j == col
+        # declare cell as selected
+        # check each column per row (so check each cell)
+        for i in range(self.board_rows) # calls instance variable for length of rows
+            for j in range(self.board_cols) # calls instance variable for length of cols
+                self.cells[i][j].selected = True # selects
+                
+
+
+
         """
         # marks the cell at (row, col) in the board as the current selected cell.
         # Once a cell has been selected, the user can edit its value or sketched value
@@ -79,6 +90,12 @@ class Board(Cell): # represents an entire Sudoku board, Board object has 81 cell
     def place_number(self,value):
         # sets the value of the current selected cell equal to user entered value
         #called when the user presses the Enter key
+        for row in range(self.board_rows)
+            for col in range(self.board_cols):
+                if self.cells[col][row].selected()
+                    if self.board[col][row] = 0:
+                        self.cells[col][row].sketched_value 0:
+                        self.cells[col][row]set_cell_value():
 
     def reset_to_original(self):
         #resets all cells in the board to their original values (0 = cleared, otherwise --> corresp digit)
