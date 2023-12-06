@@ -59,6 +59,7 @@ class SudokuGenerator:
         # determines if it is valid to enter num at (row, col) in the board
         # this is done by checking that num is unused in the appropriate, row, column, and box
 
+        # had to regenerate row and col value that aligned with the starting cell in a box
         row_start = row - row % 3
         col_start = col - col % 3
 
