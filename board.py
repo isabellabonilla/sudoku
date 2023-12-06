@@ -9,13 +9,17 @@ class Board:
         self.width = width
         self.height = height
         self.screen = screen
-        self.array = generate_sudoku(9,num_removed)
-        #TODO: CREATE AN ARRAY OF CELL OBJECTS
+        sudoku_array = generate_sudoku(9,num_removed)
+        self.cells = []
         self.editable_cells = []
-        for i in range(height):
-            for j in range(width):
-                if self.array[i][j] == 0:
+        for i in range(height): #each row
+            cell_row = []
+            for j in range(width): #each column
+                # append a cell with the same stuff as the sudoku array
+                cell_row.append(Cell(sudoku_array[i][j], i, j, self.screen))
+                if sudoku_array[i][j] == 0:
                     self.editable_cells.append((i, j)) #append the coordinates of the editable cells
+            self.cells.append(cell_row)
 
 
 
@@ -44,9 +48,6 @@ class Board:
     def select(self, row, col):
         # marks the cell at (row, col) in the board as the current selected cell.
         # Once a cell has been selected, the user can edit its value or sketched value
-        
-        i == row
-        j == col
         # declare cell as selected
         # check each column per row (so check each cell)
         for i in range(self.board_rows): # calls instance variable for length of rows
@@ -70,8 +71,8 @@ class Board:
         #     return selected_cell
 
     def click(self,x,y):
-        if x <= Board.width and y <= Board.height: #FIXME it should be in the tuple is in the screen
-            return cell.(x,y)
+        if x <= self.width and y <= self.height: #FIXME it should be in the tuple is in the screen
+            return self.cells[x][y]
         '''if a tuple of (x,y) coord is within the displayed board,
         this function returns a tuple of the (row,col) of the cell which was clicked'''
         return None
@@ -89,12 +90,12 @@ class Board:
     def place_number(self,value):
         # sets the value of the current selected cell equal to user entered value
         #called when the user presses the Enter key
-        for row in range(self.board_rows)
+        for row in range(self.board_rows):
             for col in range(self.board_cols):
-                if self.cells[col][row].selected()
-                    if self.board[col][row] = 0:
-                        self.cells[col][row].sketched_value 0:
-                        self.cells[col][row]set_cell_value():
+                if self.cells[col][row].selected():
+                    if self.board[col][row] == 0:
+                        self.cells[col][row].sketched_value = 0
+                        self.cells[col][row].set_cell_value()
 
     def reset_to_original(self):
         # Reset all cells in the board to their original values (0 if cleared, otherwise the corresponding digit)
