@@ -48,11 +48,14 @@ class Board:
     def select(self, row, col):
         # marks the cell at (row, col) in the board as the current selected cell.
         # Once a cell has been selected, the user can edit its value or sketched value
+        
+        i == row
+        j == col
         # declare cell as selected
         # check each column per row (so check each cell)
-        for i in range(self.board_rows): # calls instance variable for length of rows
-            for j in range(self.board_cols): # calls instance variable for length of cols
-                self.cells[i][j].selected = True # marked as selected
+        for row in range(self.board_rows) # calls instance variable for length of rows
+            for col in range(self.board_cols) # calls instance variable for length of cols
+                self.cells[row][col].selected = True # marked as selected
 
         # pygame.Rect and collidepoint() --> see if mouse is on board
         # compute the row and column of the mouse pointer
@@ -80,21 +83,32 @@ class Board:
     def clear(self):
         # Clears the value cell. Note that the user can only remove the cell values and sketched value that are
         # filled by themselves
-        pass
+        for row in range(self.board_rows): # for every row check eveery column (check each cell)
+            for col in range(self.board_cols):
+                if self.cells[row][col].selected: # if selected
+                    # check OG board, if there is nothin in OG board, remove the sketched value and actual value
+                    if self.board[row][col] == 0:
+                        self.cells[row][col].sketched_value == 0
+                        self.cells[row][col].value == 0
+
 
     def sketch(self, value):
         # Sets the sketched value of the current selected cell equal to user entered value.
         # It will be displayed at the top left corner of the cell using the draw() function.
-        pass
+
+        for row in range(self.board_rows):  # start how you do almost all the other functions
+            for col in range(self.board_cols): 
+                if self.cells[row][col].selected:
+                    self.cells[row][col].set_sketched_value(value)   # uses cell class setter function for setting sketched
 
     def place_number(self,value):
         # sets the value of the current selected cell equal to user entered value
-        #called when the user presses the Enter key
-        for row in range(self.board_rows):
+        #called when the user presses the Enter key IN MAINNNNNN
+        for row in range(self.board_rows):    # start how you do almost all other functions (looking through each)
             for col in range(self.board_cols):
-                if self.cells[col][row].selected():
+                if self.cells[col][row].selected(): # if cell is selected and has nothing there but CAN have something there, sketch and set
                     if self.board[col][row] == 0:
-                        self.cells[col][row].sketched_value = 0
+                        self.cells[col][row].sketched_value[0]
                         self.cells[col][row].set_cell_value()
 
     def reset_to_original(self):
