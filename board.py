@@ -1,16 +1,27 @@
 import sudoku_generator
 from cell import Cell
-import pygame, sys
+import pygame
 
-class Board(Cell):
-
-    def __init__(self, width, height, screen, difficulty):
+class Board:
+    def __init__(self, width, height, screen, num_removed):
         # screen is a window from PyGame.
         # difficulty is a variable to indicate if the user chose easy, medium, or hard
-        self.difficulty = difficulty
         self.width = width
         self.height = height
         self.screen = screen
+        sudoku_array = generate_sudoku(9,num_removed)
+        self.cells = []
+        self.editable_cells = []
+        for i in range(height): #each row
+            cell_row = []
+            for j in range(width): #each column
+                # append a cell with the same stuff as the sudoku array
+                cell_row.append(Cell(sudoku_array[i][j], i, j, self.screen))
+                if sudoku_array[i][j] == 0:
+                    self.editable_cells.append((i, j)) #append the coordinates of the editable cells
+            self.cells.append(cell_row)
+
+
 
     def draw(self):
         # draws an outline of the Sudoku grid, with bold lines to delineate the 3x3 boxes.
@@ -67,14 +78,10 @@ class Board(Cell):
     def select(self, row, col):
         # marks the cell at (row, col) in the board as the current selected cell.
         # Once a cell has been selected, the user can edit its value or sketched value
-        
-        i == row
-        j == col
         # declare cell as selected
         # check each column per row (so check each cell)
-
-        for row in range(self.board_rows) # calls instance variable for length of rows
-            for col in range(self.board_cols) # calls instance variable for length of cols
+        for row in range(self.board_rows): # calls instance variable for length of rows
+            for col in range(self.board_cols): # calls instance variable for length of cols
                 self.cells[row][col].selected = True # marked as selected
 
         # pygame.Rect and collidepoint() --> see if mouse is on board
@@ -94,8 +101,8 @@ class Board(Cell):
         #     return selected_cell
 
     def click(self,x,y):
-        if x in Board.width and y in Board.height: #FIXME it should be in the tuple is in the screen
-            return cell.(x,y)
+        if x <= self.width and y <= self.height: #FIXME it should be in the tuple is in the screen
+            return self.cells[x][y]
         '''if a tuple of (x,y) coord is within the displayed board,
         this function returns a tuple of the (row,col) of the cell which was clicked'''
         return None
@@ -103,30 +110,45 @@ class Board(Cell):
     def clear(self):
         # Clears the value cell. Note that the user can only remove the cell values and sketched value that are
         # filled by themselves
-        pass
+        for row in range(self.board_rows): # for every row check eveery column (check each cell)
+            for col in range(self.board_cols):
+                if self.cells[row][col].selected: # if selected
+                    # check OG board, if there is nothin in OG board, remove the sketched value and actual value
+                    if self.board[row][col] == 0:
+                        self.cells[row][col].sketched_value == 0
+                        self.cells[row][col].value == 0
 
-    def sketch(selfself, value):
+
+    def sketch(self, value):
         # Sets the sketched value of the current selected cell equal to user entered value.
         # It will be displayed at the top left corner of the cell using the draw() function.
-        pass
+
+        for row in range(self.board_rows):  # start how you do almost all the other functions
+            for col in range(self.board_cols): 
+                if self.cells[row][col].selected:
+                    self.cells[row][col].set_sketched_value(value)   # uses cell class setter function for setting sketched
 
     def place_number(self,value):
         # sets the value of the current selected cell equal to user entered value
-        #called when the user presses the Enter key
-        for row in range(self.board_rows)
+        #called when the user presses the Enter key IN MAINNNNNN
+        for row in range(self.board_rows):    # start how you do almost all other functions (looking through each)
             for col in range(self.board_cols):
-                if self.cells[col][row].selected()
-                    if self.board[col][row] = 0:
-                        self.cells[col][row].sketched_value 0:
-                        self.cells[col][row]set_cell_value():
+                if self.cells[col][row].selected(): # if cell is selected and has nothing there but CAN have something there, sketch and set
+                    if self.board[col][row] == 0:
+                        self.cells[col][row].sketched_value[0]
+                        self.cells[col][row].set_cell_value()
 
     def reset_to_original(self):
         # Reset all cells in the board to their original values (0 if cleared, otherwise the corresponding digit)
         pass
 
     def is_full(self):
-        # Returns a Boolean value indicating whether the board is full or not.
-        pass
+        for coordinates in self.editable_cells: # check editable array to find cell
+            x, y = coordinates
+            if self.cells[x][y] == 0:
+                return False
+         # if it does not have empty cell --> it is full
+        return True
 
     def update_board(self):
         # Updates the underlying 2D board with the values in all cells.
