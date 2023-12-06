@@ -46,7 +46,7 @@ class Board:
                              (self.width, i * (self.height // 9)), thickness)
 
         # initialize button font
-        button_font = pygame.font.Font(None, 20)
+        button_font = pygame.font.Font(None, 40)
 
         # initialize buttons
         # initialize text first
@@ -68,9 +68,9 @@ class Board:
         quit_surface.blit(quit_text, (10, 10))
 
         # initialize button rectangle
-        reset_rectangle = reset_surface.get_rect(center=(self.width // 4, 9 * self.height // 10))
-        restart_rectangle = restart_surface.get_rect(center=((self.width // 4) * 2, 9 * self.height // 10))
-        quit_rectangle = quit_surface.get_rect(center=((self.width // 4) * 3, 9 * self.height // 10))
+        reset_rectangle = reset_surface.get_rect(center=(self.width // 4, self.height + 50))
+        restart_rectangle = restart_surface.get_rect(center=((self.width // 4) * 2, self.height + 50))
+        quit_rectangle = quit_surface.get_rect(center=((self.width // 4) * 3, self.height + 50))
 
         self.screen.blit(reset_surface, reset_rectangle)
         self.screen.blit(restart_surface, restart_rectangle)
