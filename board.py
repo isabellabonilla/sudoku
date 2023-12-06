@@ -36,34 +36,32 @@ class Board(Cell): # represents an entire Sudoku board, Board object has 81 cell
         pass # missing buttons at bottom
 
     def select(self, row, col):
+        # marks the cell at (row, col) in the board as the current selected cell.
+        # Once a cell has been selected, the user can edit its value or sketched value
+        
         i == row
         j == col
         # declare cell as selected
         # check each column per row (so check each cell)
         for i in range(self.board_rows) # calls instance variable for length of rows
             for j in range(self.board_cols) # calls instance variable for length of cols
-                self.cells[i][j].selected = True # selects
-                
+                self.cells[i][j].selected = True # marked as selected
 
-
-
-        """
-        # marks the cell at (row, col) in the board as the current selected cell.
-        # Once a cell has been selected, the user can edit its value or sketched value
-        """
         # pygame.Rect and collidepoint() --> see if mouse is on board
         # compute the row and column of the mouse pointer
-        pygame.draw.rect()
 
-        for event in pygame.event.get():
-            if event.type ==pygame.MOUSEBUTTONDOWN:
-                row, col = event #idk about the mx,my=event line yet
+        # karla edits
+        # pygame.draw.rect()
 
-        if self.board.collidepoint(x,y):
-            row = ? #fixme LATER
-            col = ?
-            selected_cell = current_cell.(#,row,col,screen) #FIXME tryna call the cell function to assign it to exist?
-            return selected_cell
+        # for event in pygame.event.get():
+        #     if event.type ==pygame.MOUSEBUTTONDOWN:
+        #         row, col = event #idk about the mx,my=event line yet
+
+        # if self.board.collidepoint(x,y):
+        #     row = ? #fixme LATER
+        #     col = ?
+        #     selected_cell = current_cell.(#,row,col,screen) #FIXME tryna call the cell function to assign it to exist?
+        #     return selected_cell
 
     def click(self,x,y):
         if x in Board.width and y in Board.height: #FIXME it should be in the tuple is in the screen
