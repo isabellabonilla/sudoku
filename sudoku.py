@@ -248,8 +248,7 @@ def main():
                     sketched_value = event.key - 48
                     current_game.sketch(sketched_value)
 
-                if event.key == pygame.K_RETURN:
-
+                elif event.key == pygame.K_RETURN:
                     current_game.place_number(sketched_value)
 
                     if current_game.is_full():
@@ -257,11 +256,21 @@ def main():
                         difficulty = draw_game_start(screen)
                         current_game = Board(900, 900, screen, difficulty)  # add sudoku_board[0] if issues :)
 
-                if event.key == pygame.K_BACKSPACE:
+                elif event.key == pygame.K_BACKSPACE:
                     current_game.clear()  # calls method from board to clear the CELL value
 
-            if event.type == pygame.KEYDOWN:
-                continue
+                elif event.key == pygame.K_UP:
+                    if current_game.selected_row > 0:
+                        current_game.select(current_game.selected_row-1, current_game.selected_col)
+                elif event.key == pygame.K_DOWN:
+                    if current_game.selected_row < 8:
+                        current_game.select(current_game.selected_row+1, current_game.selected_col)
+                elif event.key == pygame.K_LEFT:
+                    if current_game.selected_col > 0:
+                        current_game.select(current_game.selected_row, current_game.selected_col-1)
+                elif event.key == pygame.K_RIGHT:
+                    if current_game.selected_col < 8:
+                        current_game.select(current_game.selected_row, current_game.selected_col+1)
 
 
 if __name__ == '__main__':
