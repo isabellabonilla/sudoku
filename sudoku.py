@@ -296,12 +296,9 @@ def main():
                     sketched_value = event.key - 48 # - pygame.K_1 + 1   # sets sketch value to the event key to sketch it on the board
                     current_game.sketch(sketched_value)
 
-                if event.key == pygame.K_RETURN:
-
+                elif event.key == pygame.K_RETURN:
                     #Board.place_number(sketched_value)
                     current_game.place_number(sketched_value) ## it'll no longer be skecthed, actually place it on the board
-
-
 
                     if current_game.is_full(): ## set an option here that if the board is full and the user submits it, check if right or wrong and end game
                         game_over(screen, current_game.check_board())
@@ -309,8 +306,21 @@ def main():
                         difficulty = draw_game_start(screen)
                         current_game = Board(900, 900, screen, difficulty)  # add sudoku_board[0] if issues :)
 
-                if event.key == pygame.K_BACKSPACE:
+                elif event.key == pygame.K_BACKSPACE:
                     current_game.clear()  # calls method from board to clear the CELL value
+
+                elif event.key == pygame.K_UP:
+                    if current_game.selected_row > 0:
+                        current_game.select(current_game.selected_row-1, current_game.selected_col)
+                elif event.key == pygame.K_DOWN:
+                    if current_game.selected_row < 8:
+                        current_game.select(current_game.selected_row+1, current_game.selected_col)
+                elif event.key == pygame.K_LEFT:
+                    if current_game.selected_col > 0:
+                        current_game.select(current_game.selected_row, current_game.selected_col-1)
+                elif event.key == pygame.K_RIGHT:
+                    if current_game.selected_col < 8:
+                        current_game.select(current_game.selected_row, current_game.selected_col+1)
                 else:
                     pass
                 #return some sort of error that wrong input was inserted

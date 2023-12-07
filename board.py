@@ -91,8 +91,8 @@ class Board:
         # Once a cell has been selected, the user can edit its value or sketched value
         # declare cell as selected
         # check each column per row (so check each cell)
-        #for row in range(self.height): # calls instance variable for length of rows
-        #    for col in range(self.width): # calls instance variable for length of cols
+        # for row in range(self.height): # calls instance variable for length of rows
+        # for col in range(self.width): # calls instance variable for length of cols
 
         if self.cells[row][col].is_editable():
             # Unselect the currently selected cell
