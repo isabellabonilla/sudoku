@@ -1,7 +1,7 @@
+import pygame
 import sys
 from board import Board
 import sudoku_generator
-import pygame
 from cell import Cell
 
 pygame.init()
