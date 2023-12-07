@@ -116,13 +116,8 @@ class Board:
     def clear(self):
         # Clears the value cell. Note that the user can only remove the cell values and sketched value that are
         # filled by themselves
-        for coordinates in self.editable_cells:  # check editable array to find cell
-            x, y = coordinates
-            if self.cells[x][y].selected: # if selected
-                # check OG board, if there is nothin in OG board, remove the sketched value and actual value
-                if self.cells[x][y] == 0:
-                    self.cells[x][y].sketched_value = 0
-                    self.cells[x][y].value = 0
+        self.cells[self.selected_row][self.selected_col].sketched_value = 0
+        self.cells[self.selected_row][self.selected_col].value = 0
 
 
     def sketch(self, value):
@@ -173,10 +168,10 @@ class Board:
         # each row has no duplicate number
         numbers = []
         for col in range(self.num_cols):
-            if self.cells[row][col] in numbers:
+            if self.cells[row][col].value in numbers:
                 return False
             else:
-                numbers.append(self.cells[row][col])
+                numbers.append(self.cells[row][col].value)
 
         return True
 
@@ -184,10 +179,10 @@ class Board:
         # each col has no duplicate number
         numbers = []
         for row in range(self.num_rows):
-            if self.cells[row][col] in numbers:
+            if self.cells[row][col].value in numbers:
                 return False
             else:
-                numbers.append(self.cells[row][col])
+                numbers.append(self.cells[row][col].value)
 
         return True
     def check_box(self, row_start, col_start):
@@ -195,10 +190,10 @@ class Board:
         numbers = []
         for row in range(row_start, row_start + 3): # check the 3*3 rows
             for col in range(col_start, col_start + 3): # check the 3*3 columns
-                if self.board[row][col] in numbers:
+                if self.cells[row][col].value in numbers:
                     return False
                 else:
-                    numbers.append(self.cells[row][col])
+                    numbers.append(self.cells[row][col].value)
         return True
 
     def check_board(self):

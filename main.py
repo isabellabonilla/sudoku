@@ -102,22 +102,45 @@ def draw_game_start(screen):
         pygame.display.update()
 
 def game_over(screen, win):
-    game_over_font = pygame.font.Font(None, 40)
+    game_over_font = pygame.font.Font(None, 100)
+    end_button_font = pygame.font.Font(None, 70)
     screen.fill((255, 255, 255))
     if win == True:
         text = 'Game Won!'
+        button_text = 'Quit'
     else:
         text = "Game Over :("
-    game_over_text = game_over_font.render(text, 0, (0, 176, 188))
-    game_over_surface = game_over_rectangle.Surface(text.get_size()[0] + 20, game_over_text.get_size()[1]+ 20)
-    game_over_rectangle = game_over_rectangle.get_rect(center=(width // 2, height // 2 - 100))
-    
+        button_text = 'Restart'
+
+    game_over_text = game_over_font.render(text, 0, (255, 255, 255))
+    game_over_surface = pygame.Surface((game_over_text.get_size()[0] + 20, game_over_text.get_size()[1]+ 20))
+    game_over_surface.fill((0, 176, 188))
+    game_over_rectangle = game_over_surface.get_rect(center=(width // 2, height // 2 - 100))
+    game_over_surface.blit(game_over_text, (10, 10))
+
+    end_button_text = end_button_font.render(button_text, 0, (255, 255, 255))
+    end_button_surface = pygame.Surface((end_button_text.get_size()[0] + 20, end_button_text.get_size()[1] + 20))
+    end_button_surface.fill((0, 176, 188))
+    end_button_rectangle = end_button_surface.get_rect(center=(width // 2, height // 2 + 100))
+    end_button_surface.blit(end_button_text, (10, 10))
+
+
+
     screen.blit(game_over_surface, game_over_rectangle)
-    screen.blit(draw_game_start.restart_surface, draw_game_start.restart_rectangle)
+    screen.blit(end_button_surface, end_button_rectangle)
 
-    pygame.display.update
-
-    return game_over_rectangle
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if end_button_rectangle.collidepoint(event.pos):
+                    if win:
+                        sys.exit()
+                    else:
+                        return
+        pygame.display.update()
+    return
 
 
 
@@ -281,25 +304,10 @@ def main():
 
 
                     if current_game.is_full(): ## set an option here that if the board is full and the user submits it, check if right or wrong and end game
+                        game_over(screen, current_game.check_board())
 
-
-                        if current_game.check_board() == True:
-
-                            game_set_over = False
-                            game_over_rectangle = game_over(screen, True)
-
-
-                            # win screen goes only to exit
-                            if event.type == pygame.MOUSEBUTTONDOWN and game_over_rectangle.collidepoint(event.pos):
-                                sys.exit()
-
-                        elif current_game.check_board() == False:
-                            game_set_over = True
-                            game_over_rectangle = game_over(screen, False)
-
-                            # lose screen only goes to restart the loop by going main menu
-                            if event.type == pygame.MOUSEBUTTONDOWN and game_over_rectangle.collidepoint(event.pos):
-                                playing_board = False
+                        difficulty = draw_game_start(screen)
+                        current_game = Board(900, 900, screen, difficulty)  # add sudoku_board[0] if issues :)
 
                 if event.key == pygame.K_BACKSPACE:
                     current_game.clear()  # calls method from board to clear the CELL value
